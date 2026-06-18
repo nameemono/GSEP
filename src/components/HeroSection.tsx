@@ -66,13 +66,17 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="font-display text-5xl sm:text-7xl md:text-8xl font-extrabold tracking-tighter text-white"
+            className="font-display tracking-tight leading-[0.95] text-center uppercase"
+            style={{ fontSize: "clamp(3.5rem, 9.5vw, 7.5rem)", fontWeight: 800 }}
           >
-            <span className="block text-white uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
-              GSEP RISC-V
+            <span className="block text-white">
+              GSEP
             </span>
-            <span className="block mt-3 font-mono font-medium tracking-wide text-xs sm:text-sm text-brand-gold uppercase">
-              ASEM MALAYSIA × SHAKTI INDIA SEMICONDUCTOR ALLIANCE
+            <span className="block text-brand-gold mt-1">
+              RISC-V
+            </span>
+            <span className="block text-slate-300 text-[0.35em] tracking-[0.28em] font-medium mt-4">
+              PROGRAMME
             </span>
           </motion.h1>
 

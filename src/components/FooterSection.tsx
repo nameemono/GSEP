@@ -66,8 +66,8 @@ export default function FooterSection() {
               <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider">🎯 Goal</span>
               <p className="font-mono text-xs font-bold text-white mt-1">RTL / Verification</p>
             </div>
-            <div className="p-4 bg-[#050505] border border-brand-gold/15 rounded-xl">
-              <span className="text-[10px] font-mono text-[#FFD700] uppercase tracking-wider">📚 Learning Progress</span>
+            <div className="p-4 bg-[#050505] border border-brand-gold/10 rounded-xl">
+              <span className="text-[10px] font-mono text-brand-gold uppercase tracking-wider">📚 Learning Progress</span>
               <p className="font-mono text-xs font-bold text-brand-gold mt-1">78% Average</p>
             </div>
             <div className="p-4 bg-[#050505] border border-brand-gold/10 rounded-xl">
@@ -114,7 +114,7 @@ export default function FooterSection() {
               <div className="p-2.5 rounded-xl bg-slate-900 border border-brand-gold/30 flex items-center justify-center">
                 <Cpu className="w-4.5 h-4.5 text-brand-gold" />
               </div>
-              <span className="font-display font-bold text-sm tracking-widest text-[#FFD700]">
+              <span className="font-display font-bold text-sm tracking-widest text-brand-gold">
                 GSEP × SHAKTI
               </span>
             </div>

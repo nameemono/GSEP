@@ -1202,158 +1202,154 @@ export default function PersonalDashboard() {
               </p>
             </div>
 
-            {/* Sliding Level Monitors */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-[#0e0e0e] p-6 rounded-2xl border border-brand-gold/15">
-              
-              {/* Slider Column Left */}
-              <div className="space-y-5">
-                <div className="space-y-2">
-                  <div className="flex justify-between font-mono text-xs">
-                    <span className="text-white flex items-center space-x-1">
-                      <Cpu className="w-3.5 h-3.5 text-brand-gold" />
-                      <span>Digital Logic Foundations & Gates</span>
-                    </span>
-                    <span className="text-brand-gold-glow font-black">{progressDigitalLogic}%</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={progressDigitalLogic}
-                    onChange={(e) => setProgressDigitalLogic(Number(e.target.value))}
-                    className="w-full accent-brand-gold cursor-pointer bg-slate-900 h-1.5 rounded-lg appearance-none"
-                  />
-                </div>
+            {/* Sliding Level Monitors - Redesigned into Large Interactive Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                {
+                  id: "logic",
+                  title: "Digital Logic Foundations",
+                  value: progressDigitalLogic,
+                  setter: setProgressDigitalLogic,
+                  icon: <Cpu className="w-5 h-5 text-brand-gold-glow" />,
+                  desc: "Gates, boolean algebra simplifications, Karnaugh maps (K-Maps)."
+                },
+                {
+                  id: "linux",
+                  title: "Linux & EDA Environments",
+                  value: progressLinux,
+                  setter: setProgressLinux,
+                  icon: <Terminal className="w-5 h-5 text-brand-gold-glow" />,
+                  desc: "Bash utilities, file systems, SSH terminal networks."
+                },
+                {
+                  id: "git",
+                  title: "Git & Version Controls",
+                  value: progressGit,
+                  setter: setProgressGit,
+                  icon: <Layers className="w-5 h-5 text-brand-gold-glow" />,
+                  desc: "Commit tracking, remote branches, submodules merging."
+                },
+                {
+                  id: "verilog",
+                  title: "Verilog RTL Design",
+                  value: progressVerilog,
+                  setter: setProgressVerilog,
+                  icon: <FileCode className="w-5 h-5 text-brand-gold-glow" />,
+                  desc: "Always sequential blocks, timing pipelines, registers."
+                },
+                {
+                  id: "riscv",
+                  title: "RISC-V ISA Architecture",
+                  value: progressRiscv,
+                  setter: setProgressRiscv,
+                  icon: <Cpu className="w-5 h-5 text-brand-gold-glow animate-pulse" />,
+                  desc: "Instruction execution loops, register mappings, CSR arrays."
+                },
+                {
+                  id: "assembly",
+                  title: "Assembly Mappings",
+                  value: progressAssembly,
+                  setter: setProgressAssembly,
+                  icon: <Terminal className="w-5 h-5 text-brand-gold-glow animate-pulse" />,
+                  desc: "Bare-metal compiler traces, compiler offsets instructions."
+                },
+                {
+                  id: "sta",
+                  title: "Static Timing Signoff",
+                  value: progressSta,
+                  setter: setProgressSta,
+                  icon: <Sliders className="w-5 h-5 text-brand-gold-glow" />,
+                  desc: "Setup and hold margin timing paths, clock tree constraints."
+                },
+                {
+                  id: "verification",
+                  title: "SystemVerilog Verification",
+                  value: progressVerification,
+                  setter: setProgressVerification,
+                  icon: <CheckCircle className="w-5 h-5 text-brand-gold-glow" />,
+                  desc: "Design validation benches, self-checking scoreboards."
+                }
+              ].map((card) => {
+                const isCompleted = card.value === 100;
+                
+                // Get ASCII blocks
+                const getBlockBar = (percentage: number) => {
+                  const totalBlocks = 10;
+                  const filledBlocks = Math.round((percentage / 100) * totalBlocks);
+                  const emptyBlocks = totalBlocks - filledBlocks;
+                  return "█".repeat(filledBlocks) + "░".repeat(emptyBlocks);
+                };
 
-                <div className="space-y-2">
-                  <div className="flex justify-between font-mono text-xs">
-                    <span className="text-white flex items-center space-x-1">
-                      <Terminal className="w-3.5 h-3.5 text-brand-gold" />
-                      <span>Linux & EDA Shell Environment</span>
-                    </span>
-                    <span className="text-brand-gold-glow font-black">{progressLinux}%</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={progressLinux}
-                    onChange={(e) => setProgressLinux(Number(e.target.value))}
-                    className="w-full accent-brand-gold cursor-pointer bg-slate-900 h-1.5 rounded-lg appearance-none"
-                  />
-                </div>
+                // Get dynamic standing text
+                const getProficiencyLabel = (percentage: number) => {
+                  if (percentage < 40) return "Novice";
+                  if (percentage < 80) return "Intermediate";
+                  return "Professional";
+                };
 
-                <div className="space-y-2">
-                  <div className="flex justify-between font-mono text-xs">
-                    <span className="text-white flex items-center space-x-1">
-                      <Layers className="w-3.5 h-3.5 text-brand-gold" />
-                      <span>Git & Versioning Best Practices</span>
-                    </span>
-                    <span className="text-brand-gold-glow font-black">{progressGit}%</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={progressGit}
-                    onChange={(e) => setProgressGit(Number(e.target.value))}
-                    className="w-full accent-brand-gold cursor-pointer bg-slate-900 h-1.5 rounded-lg appearance-none"
-                  />
-                </div>
+                const proficiency = getProficiencyLabel(card.value);
+                
+                return (
+                  <div 
+                    key={card.id}
+                    className={`group relative p-6 bg-[#0e0e0e] border rounded-2xl transition-all duration-300 hover:shadow-[0_0_20px_rgba(230,192,104,0.06)] flex flex-col justify-between h-[210px] overflow-hidden ${
+                      isCompleted 
+                        ? "border-brand-gold bg-brand-gold/[0.02]" 
+                        : "border-brand-gold/15 hover:border-brand-gold/40"
+                    }`}
+                  >
+                    {/* Glowing highlight accents */}
+                    <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand-gold/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-start">
+                        <div className="p-2 bg-[#050505] rounded-xl border border-brand-gold/10 group-hover:border-brand-gold/30 transition-colors">
+                          {card.icon}
+                        </div>
+                        <span className={`font-mono text-[9px] uppercase tracking-widest px-2.5 py-0.5 rounded-full font-bold border ${
+                          proficiency === "Professional"
+                            ? "bg-brand-gold/10 text-brand-gold border-brand-gold/20"
+                            : proficiency === "Intermediate"
+                              ? "bg-brand-red-deep/10 text-brand-red-highlight border-brand-red-highlight/25"
+                              : "bg-zinc-900 text-zinc-400 border-zinc-800"
+                        }`}>
+                          {proficiency}
+                        </span>
+                      </div>
+                      
+                      <div className="text-left mt-2">
+                        <h4 className="font-display font-bold text-[14px] sm:text-[15px] text-white tracking-tight group-hover:text-brand-gold-glow transition-colors leading-tight">
+                          {card.title}
+                        </h4>
+                        <p className="font-sans text-[11px] text-slate-400 leading-relaxed font-light mt-1 pl-0.5 line-clamp-2">
+                          {card.desc}
+                        </p>
+                      </div>
+                    </div>
 
-                <div className="space-y-2">
-                  <div className="flex justify-between font-mono text-xs">
-                    <span className="text-white flex items-center space-x-1">
-                      <FileCode className="w-3.5 h-3.5 text-brand-gold" />
-                      <span>Verilog HDL Codings & Assignments</span>
-                    </span>
-                    <span className="text-brand-gold-glow font-black">{progressVerilog}%</span>
+                    <div className="space-y-2 mt-4">
+                      {/* ASCII Block Bar & Value */}
+                      <div className="flex justify-between items-baseline font-mono text-xs pl-0.5">
+                        <span className="text-brand-gold text-[11px] tracking-wider font-black select-none">
+                          {getBlockBar(card.value)}
+                        </span>
+                        <span className="text-white text-[12px] font-black tracking-tighter">
+                          {card.value}%
+                        </span>
+                      </div>
+                      
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={card.value}
+                        onChange={(e) => card.setter(Number(e.target.value))}
+                        className="w-full h-1 bg-[#050505] rounded-lg appearance-none cursor-pointer accent-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold/30"
+                      />
+                    </div>
                   </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={progressVerilog}
-                    onChange={(e) => setProgressVerilog(Number(e.target.value))}
-                    className="w-full accent-brand-gold cursor-pointer bg-slate-900 h-1.5 rounded-lg appearance-none"
-                  />
-                </div>
-              </div>
-
-              {/* Slider Column Right */}
-              <div className="space-y-5">
-                <div className="space-y-2">
-                  <div className="flex justify-between font-mono text-xs">
-                    <span className="text-white flex items-center space-x-1">
-                      <Cpu className="w-3.5 h-3.5 text-brand-gold" />
-                      <span>RISC-V Architecture & Registers</span>
-                    </span>
-                    <span className="text-brand-gold-glow font-black">{progressRiscv}%</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={progressRiscv}
-                    onChange={(e) => setProgressRiscv(Number(e.target.value))}
-                    className="w-full accent-brand-gold cursor-pointer bg-slate-900 h-1.5 rounded-lg appearance-none"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <div className="flex justify-between font-mono text-xs">
-                    <span className="text-white flex items-center space-x-1">
-                      <Terminal className="w-3.5 h-3.5 text-brand-gold" />
-                      <span>Assembly Language Programs</span>
-                    </span>
-                    <span className="text-brand-gold-glow font-black">{progressAssembly}%</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={progressAssembly}
-                    onChange={(e) => setProgressAssembly(Number(e.target.value))}
-                    className="w-full accent-brand-gold cursor-pointer bg-slate-900 h-1.5 rounded-lg appearance-none"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <div className="flex justify-between font-mono text-xs">
-                    <span className="text-white flex items-center space-x-1">
-                      <Sliders className="w-3.5 h-3.5 text-brand-gold" />
-                      <span>Static Timing Analysis (STA) Setup</span>
-                    </span>
-                    <span className="text-brand-gold-glow font-black">{progressSta}%</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={progressSta}
-                    onChange={(e) => setProgressSta(Number(e.target.value))}
-                    className="w-full accent-brand-gold cursor-pointer bg-slate-900 h-1.5 rounded-lg appearance-none"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <div className="flex justify-between font-mono text-xs">
-                    <span className="text-white flex items-center space-x-1">
-                      <CheckCircle className="w-3.5 h-3.5 text-brand-gold" />
-                      <span>Verification Framework Blocks</span>
-                    </span>
-                    <span className="text-brand-gold-glow font-black">{progressVerification}%</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={progressVerification}
-                    onChange={(e) => setProgressVerification(Number(e.target.value))}
-                    className="w-full accent-brand-gold cursor-pointer bg-slate-900 h-1.5 rounded-lg appearance-none"
-                  />
-                </div>
-              </div>
+                );
+              })}
             </div>
 
             {/* INTERACTIVE SEMICONDUCTOR KNOWLEDGE TREE map layout */}

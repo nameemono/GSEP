@@ -53,19 +53,19 @@ export default function FaqSection() {
                 {/* Header click bar */}
                 <button
                   onClick={() => toggleFaq(item.id)}
-                  className="w-full p-5 flex items-center justify-between text-left focus:outline-none hover:bg-[#0d0d0d]/40 transition-colors cursor-pointer"
+                  className="w-full p-8 flex items-center justify-between text-left focus:outline-none hover:bg-[#0d0d0d]/40 transition-colors cursor-pointer"
                 >
-                  <div className="flex items-center space-x-3.5 pr-4">
-                    <HelpCircle className="w-5 h-5 text-brand-gold flex-shrink-0" />
-                    <span className="font-display font-semibold text-xs sm:text-sm tracking-wide text-slate-200">
+                  <div className="flex items-center space-x-4 pr-4">
+                    <HelpCircle className="w-6 h-6 text-brand-gold flex-shrink-0 animate-pulse" />
+                    <span className="font-display font-bold text-base sm:text-lg tracking-tight text-slate-200">
                       {item.question}
                     </span>
                   </div>
                   
                   {isOpen ? (
-                    <ChevronUp className="w-4 h-4 text-brand-gold-glow flex-shrink-0" />
+                    <ChevronUp className="w-5 h-5 text-brand-gold-glow flex-shrink-0 border border-brand-gold/20 p-0.5 rounded" />
                   ) : (
-                    <ChevronDown className="w-4 h-4 text-slate-500 flex-shrink-0" />
+                    <ChevronDown className="w-5 h-5 text-slate-500 flex-shrink-0 border border-zinc-800 p-0.5 rounded" />
                   )}
                 </button>
 
@@ -78,8 +78,8 @@ export default function FaqSection() {
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.25, ease: "easeInOut" }}
                     >
-                      <div className="px-5 pb-5 pt-1 border-t border-zinc-900/60">
-                        <p className="font-sans text-xs sm:text-sm text-slate-400 leading-relaxed font-light">
+                      <div className="px-8 pb-8 pt-2 border-t border-zinc-900/40">
+                        <p className="font-sans text-sm sm:text-base text-slate-400 leading-relaxed font-light">
                           {item.answer}
                         </p>
                       </div>
