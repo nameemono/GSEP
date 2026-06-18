@@ -1,0 +1,6 @@
+{
+  "name": "GSEP RISC-V Programme",
+  "description": "Interactive talent mobilization website for the GSEP RISC-V semiconductor design program conducted by ASEM in collaboration with the SHAKTI Processor ecosystem (IIT Madras).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
