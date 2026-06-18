@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Cpu, Menu, X, Globe } from "lucide-react";
+import { Cpu, Menu, X, Globe, MapPin, Calendar } from "lucide-react";
 import { Language, translations } from "../lib/translations";
 
 interface NavbarProps {
@@ -11,13 +11,6 @@ export default function Navbar({ lang, onLanguageChange }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Real-time Countdown Timers State for Key Events (IIT Madras Hub)
-  const [timeLeft, setTimeLeft] = useState({
-    flight: "",
-    start: "",
-    hackathon: "",
-  });
-
   const t = translations[lang];
 
   useEffect(() => {
@@ -26,38 +19,6 @@ export default function Navbar({ lang, onLanguageChange }: NavbarProps) {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const calculateTime = () => {
-      const now = new Date().getTime();
-
-      // June 20, 2026 Flight to Chennai
-      const flightTime = new Date("2026-06-20T08:00:00").getTime();
-      // June 20, 2026 Programme Start Offsets
-      const startTime = new Date("2026-06-20T09:00:00").getTime();
-      // July 24, 2026 Final national Hackathon Cycle
-      const hackathonTime = new Date("2026-07-24T09:00:00").getTime();
-
-      const formatDiff = (diff: number) => {
-        if (diff <= 0) return "ACTIVE";
-        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const s = Math.floor((diff % (1000 * 60)) / 1000);
-        return `${d}d ${h}h ${m}m ${s}s`;
-      };
-
-      setTimeLeft({
-        flight: formatDiff(flightTime - now),
-        start: formatDiff(startTime - now),
-        hackathon: formatDiff(hackathonTime - now),
-      });
-    };
-
-    calculateTime();
-    const interval = setInterval(calculateTime, 1000);
-    return () => clearInterval(interval);
   }, []);
 
   const navLinks = [
@@ -89,31 +50,61 @@ export default function Navbar({ lang, onLanguageChange }: NavbarProps) {
           : "py-4 bg-[#0F172A]/85 border-b border-white/5"
       }`}
     >
-      {/* Top Banner Real-Time Telemetry Micro-Countdowns */}
-      <div className="bg-[#111827] border-b border-brand-gold/10 py-1.5 px-4 overflow-hidden">
-        <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center text-[9px] sm:text-[10px] font-mono tracking-widest uppercase gap-y-1">
-          <div className="flex items-center space-x-2 text-brand-gold">
-            <span className="w-1.5 h-1.5 rounded-full bg-brand-gold animate-pulse" />
-            <span>{t.telemetryTracker}</span>
+      {/* Top Premium Information Ribbon */}
+      <div className="bg-[#0B0F19]/90 backdrop-blur-md border-b border-white/5 h-9 md:h-10 px-4 flex items-center relative z-50">
+        <div className="max-w-7xl mx-auto w-full flex items-center justify-between font-sans text-[11px] md:text-xs font-medium tracking-wide text-[#F8FAFC]/90">
+          
+          {/* Left Side: Location */}
+          <div className="flex items-center gap-1.5 select-none">
+            <MapPin className="w-3.5 h-3.5 text-brand-gold" />
+            <span className="hidden xs:inline text-slate-200">IIT Madras, Chennai</span>
+            <span className="xs:hidden text-slate-200">IIT Madras</span>
           </div>
-          <div className="flex flex-wrap gap-x-6 gap-y-1 text-slate-300">
-            <div className="flex items-center space-x-1.5">
-              <span className="text-slate-400">✈️ {t.flightToChennai}:</span>
-              <span className="text-brand-gold-glow font-black">{timeLeft.flight}</span>
-            </div>
-            <div className="flex items-center space-x-1.5">
-              <span className="text-slate-400">🎓 {t.progLaunch}:</span>
-              <span className="text-brand-gold font-black">{timeLeft.start}</span>
-            </div>
-            <div className="flex items-center space-x-1.5">
-              <span className="text-slate-400">🎯 {t.finalHackathon}:</span>
-              <span className="text-brand-blue-accent font-black">{timeLeft.hackathon}</span>
+
+          {/* Center: Language Switcher with Subtle Glass/Pill Separator */}
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <Globe className="w-3.5 h-3.5 text-slate-400 hidden xs:inline" />
+            <div className="flex items-center gap-1 sm:gap-1.5 text-slate-405 text-slate-400">
+              <button
+                onClick={() => onLanguageChange('en')}
+                className={`transition-colors font-medium hover:text-white px-1 cursor-pointer ${
+                  lang === "en" ? "text-brand-gold font-bold" : "text-slate-400"
+                }`}
+              >
+                English
+              </button>
+              <span className="text-white/10 text-[10px] select-none">|</span>
+              <button
+                onClick={() => onLanguageChange('ms')}
+                className={`transition-colors font-medium hover:text-white px-1 cursor-pointer ${
+                  lang === "ms" ? "text-brand-gold font-bold" : "text-slate-400"
+                }`}
+              >
+                Bahasa Melayu
+              </button>
+              <span className="text-white/10 text-[10px] select-none">|</span>
+              <button
+                onClick={() => onLanguageChange('ta')}
+                className={`transition-colors font-medium hover:text-white px-1 cursor-pointer ${
+                  lang === "ta" ? "text-brand-gold font-bold" : "text-slate-400"
+                }`}
+              >
+                தமிழ்
+              </button>
             </div>
           </div>
+
+          {/* Right Side: Programme Dates */}
+          <div className="flex items-center gap-1.5 select-none">
+            <Calendar className="w-3.5 h-3.5 text-brand-gold/90" />
+            <span className="hidden sm:inline text-slate-200">20 Jun – 21 Jul 2026</span>
+            <span className="sm:hidden font-mono text-[10px] text-slate-200">20 Jun – 21 Jul</span>
+          </div>
+
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-2">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-1.5">
         <div className="flex items-center justify-between h-14">
           
           {/* Brand/Logo Section - Resembling NVIDIA/Apple High-Tech Clean Design */}
@@ -151,30 +142,7 @@ export default function Navbar({ lang, onLanguageChange }: NavbarProps) {
             </div>
 
             {/* Splitter bar */}
-            <span className="h-4 w-[1px] bg-brand-gold/20" />
-
-            {/* Interactive Language Selector Pill buttons */}
-            <div className="flex items-center space-x-1 bg-[#1E293B] border border-brand-gold/20 px-2 py-1 rounded-full text-[10px] font-mono">
-              <Globe className="w-3.5 h-3.5 text-brand-gold mr-1" />
-              <button 
-                onClick={() => onLanguageChange('en')} 
-                className={`px-2 py-0.5 rounded-full transition-all duration-200 uppercase font-black cursor-pointer ${lang === 'en' ? 'bg-brand-gold text-slate-900' : 'text-slate-400 hover:text-white'}`}
-              >
-                EN
-              </button>
-              <button 
-                onClick={() => onLanguageChange('ms')} 
-                className={`px-2 py-0.5 rounded-full transition-all duration-200 uppercase font-black cursor-pointer ${lang === 'ms' ? 'bg-brand-gold text-slate-900' : 'text-slate-400 hover:text-white'}`}
-              >
-                BM
-              </button>
-              <button 
-                onClick={() => onLanguageChange('ta')} 
-                className={`px-2 py-0.5 rounded-full transition-all duration-200 uppercase font-black cursor-pointer ${lang === 'ta' ? 'bg-brand-gold text-slate-900' : 'text-slate-400 hover:text-white'}`}
-              >
-                தமிழ்
-              </button>
-            </div>
+            <span className="h-4 w-[1px] bg-[#1E293B] border-r border-white/5" />
 
             {/* Launch CTA */}
             <button
@@ -185,29 +153,8 @@ export default function Navbar({ lang, onLanguageChange }: NavbarProps) {
             </button>
           </div>
 
-          {/* Mobile navigation burger & Lang selector */}
-          <div className="lg:hidden flex items-center space-x-2">
-            <div className="flex items-center bg-[#1E293B] border border-brand-gold/20 p-0.5 rounded-full text-[10px] font-mono">
-              <button 
-                onClick={() => onLanguageChange('en')} 
-                className={`px-1.5 py-0.5 rounded-full transition-all ${lang === 'en' ? 'bg-brand-gold text-slate-900 font-bold' : 'text-slate-400'}`}
-              >
-                EN
-              </button>
-              <button 
-                onClick={() => onLanguageChange('ms')} 
-                className={`px-1.5 py-0.5 rounded-full transition-all ${lang === 'ms' ? 'bg-brand-gold text-slate-900 font-bold' : 'text-slate-400'}`}
-              >
-                BM
-              </button>
-              <button 
-                onClick={() => onLanguageChange('ta')} 
-                className={`px-1.5 py-0.5 rounded-full transition-all ${lang === 'ta' ? 'bg-brand-gold text-slate-900 font-bold' : 'text-slate-400'}`}
-              >
-                தமிழ்
-              </button>
-            </div>
-
+          {/* Mobile navigation burger */}
+          <div className="lg:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-1.5 rounded-lg border border-brand-gold/25 text-slate-300 hover:bg-brand-bg-secondary transition-colors"
