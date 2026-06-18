@@ -103,20 +103,20 @@ export default function HeroSection() {
           className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto"
         >
           <button
-            onClick={() => scrollSmoothTo("journey")}
+            onClick={() => scrollSmoothTo("mission-control-dashboard")}
             className="group w-full sm:w-auto relative px-8 py-4 rounded-lg font-mono font-bold text-xs tracking-widest uppercase transition-all duration-300 bg-gradient-to-r from-brand-gold to-brand-gold-glow text-[#050505] shadow-lg shadow-brand-gold/25 hover:shadow-brand-gold-glow/40 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
           >
             <span className="flex items-center justify-center space-x-2">
-              <span>Explore Programme</span>
+              <span>Launch Command Center</span>
               <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </span>
           </button>
 
           <button
-            onClick={() => scrollSmoothTo("journey")}
+            onClick={() => scrollSmoothTo("mission-control-dashboard")}
             className="w-full sm:w-auto px-8 py-4 rounded-lg font-mono font-bold text-xs tracking-widest uppercase border border-brand-red-highlight bg-transparent text-white hover:bg-brand-red-deep/40 transition-all duration-300 cursor-pointer"
           >
-            View Timetable
+            Open Study Planner
           </button>
         </motion.div>
 

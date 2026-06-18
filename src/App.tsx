@@ -4,11 +4,8 @@ import LoadingScreen from "./components/LoadingScreen";
 import Navbar from "./components/Navbar";
 import BackgroundCircuit from "./components/BackgroundCircuit";
 import HeroSection from "./components/HeroSection";
-import PreparationSection from "./components/PreparationSection";
-import JourneySection from "./components/JourneySection";
+import PersonalDashboard from "./components/PersonalDashboard";
 import TechStackSection from "./components/TechStackSection";
-import ImpactSection from "./components/ImpactSection";
-import PathwaySection from "./components/PathwaySection";
 import GallerySection from "./components/GallerySection";
 import FaqSection from "./components/FaqSection";
 import FooterSection from "./components/FooterSection";
@@ -53,20 +50,11 @@ export default function App() {
             {/* HERO SECTION */}
             <HeroSection />
 
-            {/* PREPARATION ROADMAP SECTION */}
-            <PreparationSection />
-
-            {/* PROGRAMME ROUTE JOURNEY */}
-            <JourneySection />
+            {/* INTERACTIVE PERSONAL DASHBOARD (COMMAND CENTER) */}
+            <PersonalDashboard />
 
             {/* SYLLABUS TECHNICAL CAPABILITY BAR */}
             <TechStackSection />
-
-            {/* CORE KEY PERFORMANCE COUNTERS */}
-            <ImpactSection />
-
-            {/* INTERACTIVE COMPACT NODES ROADMAP */}
-            <PathwaySection />
 
             {/* VISUAL ARCHIVES SCENIC PHOTOS */}
             <GallerySection />
@@ -74,7 +62,7 @@ export default function App() {
             {/* DYNAMIC FAQ ACCORDION */}
             <FaqSection />
 
-            {/* FINAL CALL ACTION AND GENERAL SPEC FOOTER */}
+            {/* FINAL PORFOLIO STATUS AND GENERAL SPEC FOOTER */}
             <FooterSection />
           </motion.main>
         )}
