@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Language, translations } from "../lib/translations";
 import { 
   Home, 
   Calendar as CalendarIcon, 
@@ -72,7 +73,8 @@ interface UserNote {
   date: string;
 }
 
-export default function PersonalDashboard() {
+export default function PersonalDashboard({ lang }: { lang: Language }) {
+  const t = translations[lang];
   // Mobile / Desktop View switcher (Tab state)
   const [activeTab, setActiveTab] = useState<"dashboard" | "calendar" | "learning" | "notes" | "progress">("dashboard");
 
@@ -514,13 +516,13 @@ export default function PersonalDashboard() {
       </div>
 
       {/* HORIZONTAL WORKSPACE MENU */}
-      <div className="grid grid-cols-5 bg-[#0d0d0d] p-1.5 rounded-xl border border-brand-gold/10 mb-8 max-w-4xl mx-auto gap-2">
+      <div className="grid grid-cols-5 bg-[#1E293B] p-1.5 rounded-xl border border-brand-gold/10 mb-8 max-w-4xl mx-auto gap-2">
         <button
           onClick={() => setActiveTab("dashboard")}
           className={`flex flex-col sm:flex-row items-center justify-center space-x-2 py-3 px-1.5 rounded-lg text-xs font-mono tracking-wider font-bold uppercase transition-all duration-300 transform cursor-pointer ${
             activeTab === "dashboard"
-              ? "bg-[#050505] border border-brand-gold/25 text-brand-gold shadow-lg"
-              : "text-slate-400 hover:text-white hover:bg-slate-900/50"
+              ? "bg-[#0F172A] border border-brand-gold/25 text-brand-gold shadow-lg"
+              : "text-slate-400 hover:text-white hover:bg-[#0F172A]/50"
           }`}
         >
           <Home className="w-4 h-4 mb-1 sm:mb-0" />
@@ -530,8 +532,8 @@ export default function PersonalDashboard() {
           onClick={() => setActiveTab("calendar")}
           className={`flex flex-col sm:flex-row items-center justify-center space-x-2 py-3 px-1.5 rounded-lg text-xs font-mono tracking-wider font-bold uppercase transition-all duration-300 transform cursor-pointer ${
             activeTab === "calendar"
-              ? "bg-[#050505] border border-brand-gold/25 text-brand-gold shadow-lg"
-              : "text-slate-400 hover:text-white hover:bg-slate-900/50"
+              ? "bg-[#0F172A] border border-brand-gold/25 text-brand-gold shadow-lg"
+              : "text-slate-400 hover:text-white hover:bg-[#0F172A]/50"
           }`}
         >
           <CalendarIcon className="w-4 h-4 mb-1 sm:mb-0" />
@@ -541,8 +543,8 @@ export default function PersonalDashboard() {
           onClick={() => setActiveTab("learning")}
           className={`flex flex-col sm:flex-row items-center justify-center space-x-2 py-3 px-1.5 rounded-lg text-xs font-mono tracking-wider font-bold uppercase transition-all duration-300 transform cursor-pointer ${
             activeTab === "learning"
-              ? "bg-[#050505] border border-brand-gold/25 text-brand-gold shadow-lg"
-              : "text-slate-400 hover:text-white hover:bg-slate-900/50"
+              ? "bg-[#0F172A] border border-brand-gold/25 text-brand-gold shadow-lg"
+              : "text-slate-400 hover:text-white hover:bg-[#0F172A]/50"
           }`}
         >
           <BookOpen className="w-4 h-4 mb-1 sm:mb-0" />
@@ -552,8 +554,8 @@ export default function PersonalDashboard() {
           onClick={() => setActiveTab("notes")}
           className={`flex flex-col sm:flex-row items-center justify-center space-x-2 py-3 px-1.5 rounded-lg text-xs font-mono tracking-wider font-bold uppercase transition-all duration-300 transform cursor-pointer ${
             activeTab === "notes"
-              ? "bg-[#050505] border border-brand-gold/25 text-brand-gold shadow-lg"
-              : "text-slate-400 hover:text-white hover:bg-slate-900/50"
+              ? "bg-[#0F172A] border border-brand-gold/25 text-brand-gold shadow-lg"
+              : "text-slate-400 hover:text-white hover:bg-[#0F172A]/50"
           }`}
         >
           <FileText className="w-4 h-4 mb-1 sm:mb-0" />
@@ -563,8 +565,8 @@ export default function PersonalDashboard() {
           onClick={() => setActiveTab("progress")}
           className={`flex flex-col sm:flex-row items-center justify-center space-x-2 py-3 px-1.5 rounded-lg text-xs font-mono tracking-wider font-bold uppercase transition-all duration-300 transform cursor-pointer ${
             activeTab === "progress"
-              ? "bg-[#050505] border border-brand-gold/25 text-brand-gold shadow-lg"
-              : "text-slate-400 hover:text-white hover:bg-slate-900/50"
+              ? "bg-[#0F172A] border border-brand-gold/25 text-brand-gold shadow-lg"
+              : "text-slate-400 hover:text-white hover:bg-[#0F172A]/50"
           }`}
         >
           <Award className="w-4 h-4 mb-1 sm:mb-0" />
@@ -1283,51 +1285,62 @@ export default function PersonalDashboard() {
                 // Get dynamic standing text
                 const getProficiencyLabel = (percentage: number) => {
                   if (percentage < 40) return "Novice";
-                  if (percentage < 80) return "Intermediate";
-                  return "Professional";
+                  if (percentage < 80) return t.dashboardStatusInProg || "Learning";
+                  return t.dashboardStatusCompleted || "Completed";
+                };
+
+                // Realistically estimate hours remaining
+                const getHoursRemaining = (percentage: number) => {
+                  if (percentage >= 100) return 0;
+                  return Math.round(((100 - percentage) / 100) * 16);
                 };
 
                 const proficiency = getProficiencyLabel(card.value);
+                const hoursLeft = getHoursRemaining(card.value);
                 
                 return (
                   <div 
                     key={card.id}
-                    className={`group relative p-6 bg-[#0e0e0e] border rounded-2xl transition-all duration-300 hover:shadow-[0_0_20px_rgba(230,192,104,0.06)] flex flex-col justify-between h-[210px] overflow-hidden ${
+                    className={`group relative p-6 bg-[#1E293B] border rounded-2xl transition-all duration-300 hover:shadow-[0_0_20px_rgba(200,169,107,0.06)] flex flex-col justify-between h-[230px] overflow-hidden ${
                       isCompleted 
                         ? "border-brand-gold bg-brand-gold/[0.02]" 
-                        : "border-brand-gold/15 hover:border-brand-gold/40"
+                        : "border-brand-gold/15 hover:border-brand-blue-accent/40"
                     }`}
                   >
                     {/* Glowing highlight accents */}
-                    <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand-gold/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand-blue-accent/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                     
                     <div className="space-y-2">
                       <div className="flex justify-between items-start">
-                        <div className="p-2 bg-[#050505] rounded-xl border border-brand-gold/10 group-hover:border-brand-gold/30 transition-colors">
+                        <div className="p-2 bg-[#0F172A] rounded-xl border border-brand-gold/10 group-hover:border-brand-gold/30 transition-colors">
                           {card.icon}
                         </div>
                         <span className={`font-mono text-[9px] uppercase tracking-widest px-2.5 py-0.5 rounded-full font-bold border ${
-                          proficiency === "Professional"
-                            ? "bg-brand-gold/10 text-brand-gold border-brand-gold/20"
-                            : proficiency === "Intermediate"
-                              ? "bg-brand-red-deep/10 text-brand-red-highlight border-brand-red-highlight/25"
-                              : "bg-zinc-900 text-zinc-400 border-zinc-800"
+                          proficiency === "Completed" || proficiency === "Selesai" || proficiency === t.dashboardStatusCompleted
+                            ? "bg-brand-blue-accent/10 text-brand-blue-accent border-brand-blue-accent/20"
+                            : "bg-brand-gold/10 text-brand-gold border-brand-gold/20"
                         }`}>
                           {proficiency}
                         </span>
                       </div>
                       
                       <div className="text-left mt-2">
-                        <h4 className="font-display font-bold text-[14px] sm:text-[15px] text-white tracking-tight group-hover:text-brand-gold-glow transition-colors leading-tight">
+                        <h4 className="font-display font-bold text-[14px] sm:text-[15px] text-white tracking-tight group-hover:text-brand-gold transition-colors leading-tight">
                           {card.title}
                         </h4>
-                        <p className="font-sans text-[11px] text-slate-400 leading-relaxed font-light mt-1 pl-0.5 line-clamp-2">
+                        <p className="font-sans text-[11px] text-[#CBD5E1] leading-relaxed font-light mt-1 pl-0.5 line-clamp-2">
                           {card.desc}
                         </p>
                       </div>
                     </div>
 
-                    <div className="space-y-2 mt-4">
+                    <div className="space-y-2 mt-4 text-left">
+                      {/* Metric info */}
+                      <div className="flex justify-between items-center text-[10px] font-mono text-slate-400 pl-0.5 mb-1">
+                        <span className="uppercase">Status: <span className="text-[#F8FAFC] font-semibold">{proficiency}</span></span>
+                        <span>{t.hoursRemaining || "Hours Remaining"}: <span className="text-brand-blue-accent font-black">{hoursLeft}h</span></span>
+                      </div>
+
                       {/* ASCII Block Bar & Value */}
                       <div className="flex justify-between items-baseline font-mono text-xs pl-0.5">
                         <span className="text-brand-gold text-[11px] tracking-wider font-black select-none">
@@ -1344,7 +1357,7 @@ export default function PersonalDashboard() {
                         max="100"
                         value={card.value}
                         onChange={(e) => card.setter(Number(e.target.value))}
-                        className="w-full h-1 bg-[#050505] rounded-lg appearance-none cursor-pointer accent-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold/30"
+                        className="w-full h-1 bg-[#0F172A] rounded-lg appearance-none cursor-pointer accent-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold/30"
                       />
                     </div>
                   </div>
@@ -1794,42 +1807,46 @@ export default function PersonalDashboard() {
 
       </div>
 
-      {/* FLOAT BOTTOM DOCK MOCK-UP (FIXED ON VIEWPORT ON MOBILE) */}
-      <div className="fixed sm:absolute bottom-4 left-1/2 -translate-x-1/2 max-w-[340px] z-50 bg-[#0d0d0d]/95 backdrop-blur-md rounded-full px-5 py-2.5 border border-brand-gold/30 shadow-2xl flex justify-between items-center space-x-4">
+      {/* MOBILE-FIRST STICKY BOTTOM NAVIGATION BAR */}
+      <div className="fixed bottom-0 inset-x-0 z-50 bg-[#1E293B]/95 backdrop-blur-md border-t border-brand-gold/25 py-2 px-4 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] flex justify-around items-center lg:hidden">
         <button
           onClick={() => { setActiveTab("dashboard"); window.scrollTo({ top: document.getElementById("mission-control-dashboard")?.offsetTop ?? 0, behavior: "smooth" }); }}
-          className={`p-2 rounded-full transition-all cursor-pointer ${activeTab === "dashboard" ? "bg-brand-gold text-black font-black" : "text-slate-450 text-slate-400 hover:text-brand-gold hover:bg-slate-900"}`}
-          title="Command Panel"
+          className={`flex flex-col items-center justify-center space-y-1 transition-all cursor-pointer ${activeTab === "dashboard" ? "text-brand-gold" : "text-slate-400 hover:text-white"}`}
         >
-          <Home className="w-4.5 h-4.5" />
+          <Home className="w-5 h-5" />
+          <span className="text-[9px] font-mono tracking-wider font-semibold">Dashboard</span>
         </button>
-        <button
-          onClick={() => { setActiveTab("calendar"); window.scrollTo({ top: document.getElementById("mission-control-dashboard")?.offsetTop ?? 0, behavior: "smooth" }); }}
-          className={`p-2 rounded-full transition-all cursor-pointer ${activeTab === "calendar" ? "bg-brand-gold text-black font-black" : "text-slate-450 text-slate-400 hover:text-brand-gold hover:bg-slate-900"}`}
-          title="Interactive Timetables"
-        >
-          <CalendarIcon className="w-4.5 h-4.5" />
-        </button>
+
         <button
           onClick={() => { setActiveTab("learning"); window.scrollTo({ top: document.getElementById("mission-control-dashboard")?.offsetTop ?? 0, behavior: "smooth" }); }}
-          className={`p-2 rounded-full transition-all cursor-pointer ${activeTab === "learning" ? "bg-brand-gold text-black font-black" : "text-slate-450 text-slate-400 hover:text-brand-gold hover:bg-slate-900"}`}
-          title="Module Sliders"
+          className={`flex flex-col items-center justify-center space-y-1 transition-all cursor-pointer ${activeTab === "learning" ? "text-brand-gold" : "text-slate-400 hover:text-white"}`}
         >
-          <BookOpen className="w-4.5 h-4.5" />
+          <BookOpen className="w-5 h-5" />
+          <span className="text-[9px] font-mono tracking-wider font-semibold">Learning</span>
         </button>
+
+        <button
+          onClick={() => { setActiveTab("calendar"); window.scrollTo({ top: document.getElementById("mission-control-dashboard")?.offsetTop ?? 0, behavior: "smooth" }); }}
+          className={`flex flex-col items-center justify-center space-y-1 transition-all cursor-pointer ${activeTab === "calendar" ? "text-brand-gold" : "text-slate-400 hover:text-white"}`}
+        >
+          <CalendarIcon className="w-5 h-5" />
+          <span className="text-[9px] font-mono tracking-wider font-semibold">Calendar</span>
+        </button>
+
         <button
           onClick={() => { setActiveTab("notes"); window.scrollTo({ top: document.getElementById("mission-control-dashboard")?.offsetTop ?? 0, behavior: "smooth" }); }}
-          className={`p-2 rounded-full transition-all cursor-pointer ${activeTab === "notes" ? "bg-brand-gold text-black font-black" : "text-slate-450 text-slate-400 hover:text-brand-gold hover:bg-slate-900"}`}
-          title="Notes Vault Search"
+          className={`flex flex-col items-center justify-center space-y-1 transition-all cursor-pointer ${activeTab === "notes" ? "text-[#C8A96B]" : "text-slate-400 hover:text-white"}`}
         >
-          <FileText className="w-4.5 h-4.5" />
+          <FileText className="w-5 h-5" />
+          <span className="text-[9px] font-mono tracking-wider font-semibold">Notes</span>
         </button>
+
         <button
           onClick={() => { setActiveTab("progress"); window.scrollTo({ top: document.getElementById("mission-control-dashboard")?.offsetTop ?? 0, behavior: "smooth" }); }}
-          className={`p-2 rounded-full transition-all cursor-pointer ${activeTab === "progress" ? "bg-brand-gold text-black font-black" : "text-slate-450 text-slate-400 hover:text-brand-gold hover:bg-slate-900"}`}
-          title="Credential achievements"
+          className={`flex flex-col items-center justify-center space-y-1 transition-all cursor-pointer ${activeTab === "progress" ? "text-[#3B82F6]" : "text-slate-400 hover:text-white"}`}
         >
-          <Award className="w-4.5 h-4.5" />
+          <Award className="w-5 h-5" />
+          <span className="text-[9px] font-mono tracking-wider font-semibold">Progress</span>
         </button>
       </div>
 

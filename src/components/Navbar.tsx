@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
-import { Sun, Moon, Menu, X, Cpu, Clock, Send, Zap } from "lucide-react";
+import { Cpu, Menu, X, Globe } from "lucide-react";
+import { Language, translations } from "../lib/translations";
 
-export default function Navbar() {
+interface NavbarProps {
+  lang: Language;
+  onLanguageChange: (newLang: Language) => void;
+}
+
+export default function Navbar({ lang, onLanguageChange }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -11,6 +17,8 @@ export default function Navbar() {
     start: "",
     hackathon: "",
   });
+
+  const t = translations[lang];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,11 +61,10 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: "My Dashboard", href: "#mission-control-dashboard" },
-    { name: "Syllabus Matrix", href: "#tech-stack" },
-    { name: "Career Pathways", href: "#career" },
-    { name: "Visual Archives", href: "#gallery" },
-    { name: "Support FAQs", href: "#faq" }
+    { name: t.navDashboard, href: "#mission-control-dashboard" },
+    { name: t.navSyllabus, href: "#tech-stack" },
+    { name: t.navGallery, href: "#gallery" },
+    { name: t.navFaq, href: "#faq" }
   ];
 
   const scrollSmooth = (id: string) => {
@@ -78,29 +85,29 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 font-sans ${
         isScrolled
-          ? "py-2 bg-brand-bg-secondary/95 backdrop-blur-md border-b border-brand-gold/15 shadow-2xl"
-          : "py-4 bg-[#050505]/90 border-b border-white/5"
+          ? "py-2 bg-[#0F172A]/95 backdrop-blur-md border-b border-brand-gold/15 shadow-2xl"
+          : "py-4 bg-[#0F172A]/85 border-b border-white/5"
       }`}
     >
       {/* Top Banner Real-Time Telemetry Micro-Countdowns */}
-      <div className="bg-[#0e0e0e] border-b border-brand-gold/10 py-1.5 px-4 overflow-hidden">
+      <div className="bg-[#111827] border-b border-brand-gold/10 py-1.5 px-4 overflow-hidden">
         <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center text-[9px] sm:text-[10px] font-mono tracking-widest uppercase gap-y-1">
-          <div className="flex items-center space-x-2 text-brand-gold-glow">
-            <span className="w-1.5 h-1.5 rounded-full bg-brand-gold animate-ping" />
-            <span>REAL-TIME TELEMETRY TRACKER</span>
+          <div className="flex items-center space-x-2 text-brand-gold">
+            <span className="w-1.5 h-1.5 rounded-full bg-brand-gold animate-pulse" />
+            <span>{t.telemetryTracker}</span>
           </div>
           <div className="flex flex-wrap gap-x-6 gap-y-1 text-slate-300">
             <div className="flex items-center space-x-1.5">
-              <span className="text-slate-500">✈️ Flight to Chennai:</span>
-              <span className="text-white font-black">{timeLeft.flight}</span>
+              <span className="text-slate-400">✈️ {t.flightToChennai}:</span>
+              <span className="text-brand-gold-glow font-black">{timeLeft.flight}</span>
             </div>
             <div className="flex items-center space-x-1.5">
-              <span className="text-slate-500">🎓 Programme Launch:</span>
-              <span className="text-brand-gold-glow font-black">{timeLeft.start}</span>
+              <span className="text-slate-400">🎓 {t.progLaunch}:</span>
+              <span className="text-brand-gold font-black">{timeLeft.start}</span>
             </div>
             <div className="flex items-center space-x-1.5">
-              <span className="text-slate-500">🎯 Final Hackathon:</span>
-              <span className="text-brand-red-highlight font-black">{timeLeft.hackathon}</span>
+              <span className="text-slate-400">🎯 {t.finalHackathon}:</span>
+              <span className="text-brand-blue-accent font-black">{timeLeft.hackathon}</span>
             </div>
           </div>
         </div>
@@ -109,18 +116,17 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-2">
         <div className="flex items-center justify-between h-14">
           
-          {/* Brand/Logo Section resembling ultra-premium high-tech design */}
+          {/* Brand/Logo Section - Resembling NVIDIA/Apple High-Tech Clean Design */}
           <div className="flex items-center space-x-3 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-            <div className="relative p-2 rounded-xl bg-gradient-to-br from-brand-gold/20 to-brand-red-deep/10 border border-brand-gold/30 flex items-center justify-center">
-              <Cpu className="w-5 h-5 text-brand-gold-glow animate-pulse" />
-              <span className="absolute inset-0 rounded-xl bg-brand-gold/20 blur opacity-0 hover:opacity-100 transition-opacity duration-300" />
+            <div className="relative p-2 rounded-xl bg-gradient-to-br from-brand-gold/20 to-brand-blue-accent/15 border border-brand-gold/30 flex items-center justify-center">
+              <Cpu className="w-5 h-5 text-brand-gold" />
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <span className="font-display font-black text-sm tracking-widest text-white uppercase">
+                <span className="font-display font-medium text-sm tracking-widest text-[#F8FAFC] uppercase">
                   GSEP <span className="text-brand-gold">SHAKTI</span>
                 </span>
-                <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-brand-red-deep/30 border border-brand-red-highlight/35 text-white whitespace-nowrap">
+                <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-brand-bg-secondary border border-brand-gold/15 text-white whitespace-nowrap">
                   ASEM × IITM
                 </span>
               </div>
@@ -131,13 +137,13 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Navigation links */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-6">
             <div className="flex items-center space-x-6">
               {navLinks.map((link) => (
                 <button
                   key={link.name}
                   onClick={() => scrollSmooth(link.href.replace("#", ""))}
-                  className="text-xs font-mono tracking-wider font-semibold text-slate-404 text-slate-400 hover:text-brand-gold transition-colors duration-200 cursor-pointer"
+                  className="text-xs font-mono tracking-wider font-semibold text-slate-400 hover:text-brand-gold transition-colors duration-200 cursor-pointer"
                 >
                   {link.name}
                 </button>
@@ -147,22 +153,64 @@ export default function Navbar() {
             {/* Splitter bar */}
             <span className="h-4 w-[1px] bg-brand-gold/20" />
 
-            {/* Controls */}
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={() => scrollSmooth("mission-control-dashboard")}
-                className="relative px-5 py-2 rounded-xl text-xs font-mono font-bold tracking-widest text-[#050505] bg-gradient-to-r from-brand-gold to-brand-gold-glow hover:shadow-[0_0_20px_rgba(244,197,66,0.5)] transition-all duration-300 border border-brand-gold-glow uppercase cursor-pointer"
+            {/* Interactive Language Selector Pill buttons */}
+            <div className="flex items-center space-x-1 bg-[#1E293B] border border-brand-gold/20 px-2 py-1 rounded-full text-[10px] font-mono">
+              <Globe className="w-3.5 h-3.5 text-brand-gold mr-1" />
+              <button 
+                onClick={() => onLanguageChange('en')} 
+                className={`px-2 py-0.5 rounded-full transition-all duration-200 uppercase font-black cursor-pointer ${lang === 'en' ? 'bg-brand-gold text-slate-900' : 'text-slate-400 hover:text-white'}`}
               >
-                Launch Dashboard
+                EN
+              </button>
+              <button 
+                onClick={() => onLanguageChange('ms')} 
+                className={`px-2 py-0.5 rounded-full transition-all duration-200 uppercase font-black cursor-pointer ${lang === 'ms' ? 'bg-brand-gold text-slate-900' : 'text-slate-400 hover:text-white'}`}
+              >
+                BM
+              </button>
+              <button 
+                onClick={() => onLanguageChange('ta')} 
+                className={`px-2 py-0.5 rounded-full transition-all duration-200 uppercase font-black cursor-pointer ${lang === 'ta' ? 'bg-brand-gold text-slate-900' : 'text-slate-400 hover:text-white'}`}
+              >
+                தமிழ்
               </button>
             </div>
+
+            {/* Launch CTA */}
+            <button
+              onClick={() => scrollSmooth("mission-control-dashboard")}
+              className="px-4 py-2 rounded-lg text-xs font-mono font-bold tracking-widest text-[#050505] bg-brand-gold hover:bg-brand-gold-glow transition-all duration-300 border border-brand-gold cursor-pointer"
+            >
+              {t.launchDashboard}
+            </button>
           </div>
 
-          {/* Mobile navigation burger icon */}
-          <div className="lg:hidden flex items-center">
+          {/* Mobile navigation burger & Lang selector */}
+          <div className="lg:hidden flex items-center space-x-2">
+            <div className="flex items-center bg-[#1E293B] border border-brand-gold/20 p-0.5 rounded-full text-[10px] font-mono">
+              <button 
+                onClick={() => onLanguageChange('en')} 
+                className={`px-1.5 py-0.5 rounded-full transition-all ${lang === 'en' ? 'bg-brand-gold text-slate-900 font-bold' : 'text-slate-400'}`}
+              >
+                EN
+              </button>
+              <button 
+                onClick={() => onLanguageChange('ms')} 
+                className={`px-1.5 py-0.5 rounded-full transition-all ${lang === 'ms' ? 'bg-brand-gold text-slate-900 font-bold' : 'text-slate-400'}`}
+              >
+                BM
+              </button>
+              <button 
+                onClick={() => onLanguageChange('ta')} 
+                className={`px-1.5 py-0.5 rounded-full transition-all ${lang === 'ta' ? 'bg-brand-gold text-slate-900 font-bold' : 'text-slate-400'}`}
+              >
+                தமிழ்
+              </button>
+            </div>
+
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-lg border border-brand-gold/25 text-slate-300 hover:bg-brand-bg-secondary transition-colors"
+              className="p-1.5 rounded-lg border border-brand-gold/25 text-slate-300 hover:bg-brand-bg-secondary transition-colors"
             >
               {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -171,9 +219,9 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile drawer panel with smooth sliding effects */}
+      {/* Mobile drawer panel */}
       {isOpen && (
-        <div className="lg:hidden px-4 pt-3 pb-6 bg-brand-bg-secondary border-b border-brand-gold/20 backdrop-blur-xl animate-fadeIn">
+        <div className="lg:hidden px-4 pt-3 pb-6 bg-[#0F172A] border-b border-brand-gold/20 backdrop-blur-xl animate-fadeIn">
           <div className="space-y-4 flex flex-col justify-center py-2">
             {navLinks.map((link) => (
               <button
@@ -187,9 +235,9 @@ export default function Navbar() {
             
             <button
               onClick={() => scrollSmooth("mission-control-dashboard")}
-              className="w-full mt-4 py-3 rounded-xl block text-center text-xs font-mono font-bold tracking-widest uppercase bg-gradient-to-r from-brand-gold to-brand-gold-glow text-[#050505] cursor-pointer"
+              className="w-full mt-4 py-3 rounded-lg block text-center text-xs font-mono font-bold tracking-widest uppercase bg-brand-gold text-slate-900 cursor-pointer"
             >
-              LAUNCH COMMAND CENTER &rarr;
+              {t.launchDashboard} &rarr;
             </button>
           </div>
         </div>

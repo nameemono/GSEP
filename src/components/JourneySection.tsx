@@ -134,7 +134,7 @@ export default function JourneySection() {
   const overallCompletionPercentage = Math.round((totalCompletedCount / WEEKLY_TIMELINE.length) * 100);
 
   return (
-    <section id="journey" className="py-[120px] bg-[#050505] relative overflow-hidden">
+    <section id="journey" className="py-[120px] bg-[#0F172A] relative overflow-hidden">
       
       {/* Decorative premium alignment grids */}
       <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-[#F4C542]/25 to-transparent" />
@@ -173,15 +173,18 @@ export default function JourneySection() {
         </div>
 
         {/* Global Pipeline Progress HUD */}
-        <div className="mb-12 p-8 rounded-2xl bg-[#0E0E0E] border border-zinc-900/80 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div 
+          style={{ background: "rgba(255,255,255,0.04)", backdropFilter: "blur(20px)" }}
+          className="mb-12 p-8 rounded-2xl border border-[#C8A96B]/25 flex flex-col md:flex-row justify-between items-center gap-6"
+        >
           <div className="text-left space-y-1 w-full md:w-auto">
-            <span className="font-mono text-[11px] text-[#FFD700] uppercase font-bold tracking-widest block">PIPELINE MILESTONE COMPLETION</span>
+            <span className="font-mono text-[11px] text-brand-gold uppercase font-bold tracking-widest block">PIPELINE MILESTONE COMPLETION</span>
             <h3 className="font-display font-medium text-xl sm:text-2xl text-white uppercase tracking-tight">Active Command Trajectory</h3>
           </div>
 
-          <div className="flex-1 w-full h-2.5 bg-[#050505] rounded-full overflow-hidden border border-zinc-900 mx-0 md:mx-12 relative">
+          <div className="flex-1 w-full h-2.5 bg-[#0F172A] rounded-full overflow-hidden border border-white/5 mx-0 md:mx-12 relative">
             <motion.div 
-              className="h-full bg-gradient-to-r from-[#F4C542] via-[#FFD700] to-[#C1121F]"
+              className="h-full bg-gradient-to-r from-brand-gold via-brand-gold-glow to-brand-blue-accent"
               initial={{ width: 0 }}
               animate={{ width: `${overallCompletionPercentage}%` }}
               transition={{ duration: 1, ease: "easeOut" }}
@@ -189,14 +192,14 @@ export default function JourneySection() {
             {/* Week positional indicators */}
             <div className="absolute inset-0 flex justify-between px-1 pointer-events-none">
               {WEEKLY_TIMELINE.map((_, index) => (
-                <div key={index} className="w-1.5 h-full bg-[#050505]/60 border-x border-zinc-800" />
+                <div key={index} className="w-1.5 h-full bg-[#0F172A]/60 border-x border-[#1E293B]" />
               ))}
             </div>
           </div>
 
           <div className="text-right w-full md:w-auto flex items-center justify-between md:justify-end space-x-4">
             <div className="text-right">
-              <span className="font-mono text-[11px] text-zinc-550 text-zinc-500 uppercase block">OUTCOME METRIC</span>
+              <span className="font-mono text-[11px] text-slate-400 uppercase block">OUTCOME METRIC</span>
               <span className="font-mono text-2xl font-black text-white">{overallCompletionPercentage}% Mastered</span>
             </div>
           </div>
@@ -207,11 +210,11 @@ export default function JourneySection() {
           
           {/* LHS Selector: Week big premium cards */}
           <div className="lg:col-span-5 space-y-4">
-            <span className="font-mono text-[11px] tracking-widest text-zinc-500 font-bold uppercase pl-1 block">
+            <span className="font-mono text-[11px] tracking-widest text-[#CBD5E1] font-bold uppercase pl-1 block">
               CHRONO PHASES SELECTOR
             </span>
 
-            <div className="space-y-3 max-h-[520px] overflow-y-auto pr-2">
+            <div className="space-y-3 max-h-[520px] overflow-y-auto pr-2 bg-transparent">
               {WEEKLY_TIMELINE.map((week) => {
                 const isSelected = week.id === activeWeekId;
                 const isCompleted = completedWeeks[week.id];
@@ -230,12 +233,12 @@ export default function JourneySection() {
                     whileHover={{ scale: 1.01 }}
                     className={`p-6 rounded-2xl border text-left transition-all relative overflow-hidden flex flex-col justify-between cursor-pointer ${
                       isSelected 
-                        ? "bg-[#0E0E0E] border-[#F4C542] shadow-[0_0_25px_rgba(244,197,66,0.15)]" 
-                        : "bg-[#050505] border-zinc-900/80 hover:border-zinc-800"
+                        ? "bg-[#1E293B] border-brand-gold shadow-[0_0_20px_rgba(200,169,107,0.1)]" 
+                        : "bg-[#0F172A] border-white/5 hover:border-brand-gold/30"
                     }`}
                   >
                     {isSelected && (
-                      <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#F4C542]" />
+                      <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-brand-gold" />
                     )}
 
                     <div className="flex items-start justify-between space-x-3">
@@ -243,20 +246,20 @@ export default function JourneySection() {
                         {/* Circle week icon */}
                         <div className={`w-11 h-11 rounded-lg border flex items-center justify-center flex-shrink-0 ${
                           isSelected 
-                            ? "bg-[#050505] border-[#F4C542]/50" 
-                            : "bg-zinc-950 border-zinc-900"
+                            ? "bg-[#0F172A] border-brand-gold/50" 
+                            : "bg-[#1E293B] border-zinc-800"
                         }`}>
                           {getWeekIcon(week.iconName)}
                         </div>
 
                         <div>
                           <div className="flex items-center space-x-2">
-                            <span className={`font-mono text-[11px] font-bold tracking-widest uppercase ${isSelected ? "text-[#F4C542]" : "text-zinc-500"}`}>
+                            <span className={`font-mono text-[11px] font-bold tracking-widest uppercase ${isSelected ? "text-brand-gold" : "text-slate-500"}`}>
                               {week.week}
                             </span>
                             {/* Marker indicator for current week */}
                             {week.id === "week-1" && (
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-brand-blue-accent animate-pulse" />
                             )}
                           </div>
                           <h4 className="font-display font-medium text-[18px] text-white mt-0.5 tracking-tight">
@@ -270,22 +273,22 @@ export default function JourneySection() {
                         onClick={(e) => toggleWeekCompletion(week.id, e)}
                         className={`w-6 h-6 rounded-full border flex items-center justify-center transition-all ${
                           isCompleted 
-                            ? "bg-emerald-500 border-emerald-400 text-black" 
-                            : "border-zinc-800 bg-[#050505] hover:border-[#F4C542]"
+                            ? "bg-brand-blue-accent border-brand-blue-accent text-white" 
+                            : "border-zinc-700 bg-[#0F172A] hover:border-brand-gold"
                         }`}
                       >
-                        {isCompleted && <CheckCircle2 className="w-4 h-4 text-black" />}
+                        {isCompleted && <CheckCircle2 className="w-4 h-4 text-white" />}
                       </button>
                     </div>
 
-                    <p className="font-sans text-[15px] text-zinc-400 mt-3 line-clamp-2 leading-relaxed font-light">
+                    <p className="font-sans text-[15px] text-[#CBD5E1] mt-3 line-clamp-2 leading-relaxed font-light">
                       {week.subtitle}
                     </p>
 
                     {/* Progress parameters */}
-                    <div className="mt-4 pt-4 border-t border-zinc-900/60 flex items-center justify-between text-xs font-mono text-zinc-500">
+                    <div className="mt-4 pt-4 border-t border-zinc-800 flex items-center justify-between text-xs font-mono text-slate-400">
                       <span>{week.dates}</span>
-                      <span className="text-[#FFD700]">{weekProgressValue}% Complete</span>
+                      <span className="text-brand-gold font-bold">{weekProgressValue}% Complete</span>
                     </div>
 
                   </motion.div>
@@ -303,14 +306,14 @@ export default function JourneySection() {
           </div>
 
           {/* RHS Display Panel: Expandable day-by-day sub cards */}
-          <div className="lg:col-span-7 bg-[#0E0E0E] border border-zinc-900 rounded-3xl p-8 hover-glow-gold relative min-h-[500px]">
+          <div className="lg:col-span-7 bg-[#1E293B] border border-brand-gold/15 rounded-3xl p-8 hover-glow-gold relative min-h-[500px]">
             {WEEKLY_TIMELINE.map((week) => {
               if (week.id !== activeWeekId) return null;
               return (
                 <div key={week.id} className="space-y-6 text-left">
                   
                   {/* Top header spec */}
-                  <div className="border-b border-zinc-900 pb-5">
+                  <div className="border-b border-zinc-800 pb-5">
                     <span className="font-mono text-[11px] text-brand-gold tracking-[0.2em] font-bold uppercase block mb-1">
                       CURRICULUM SPECTRA // {week.dates}
                     </span>
@@ -321,10 +324,10 @@ export default function JourneySection() {
 
                   {/* Highlights section inside week */}
                   {week.highlight && (
-                    <div className="p-4 rounded-xl bg-brand-red-deep/15 border border-brand-red-highlight/30 text-white flex items-start space-x-3.5">
-                      <Sparkles className="w-4.5 h-4.5 text-[#FFD700] flex-shrink-0 mt-0.5" />
+                    <div className="p-4 rounded-xl bg-brand-red-deep/15 border border-brand-red-highlight/35 text-white flex items-start space-x-3.5">
+                      <Sparkles className="w-4.5 h-4.5 text-brand-gold flex-shrink-0 mt-0.5" />
                       <div>
-                        <span className="font-mono text-[10px] text-[#FFD700] tracking-widest font-black block uppercase">
+                        <span className="font-mono text-[10px] text-brand-gold tracking-widest font-black block uppercase">
                           CRITICAL INSTRUCTIONAL MILESTONE
                         </span>
                         <p className="font-sans text-[15px] mt-0.5 font-light leading-relaxed">

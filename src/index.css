@@ -6,15 +6,16 @@
   --font-display: "Sora", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
-  /* Premium Semiconductor Industry (Rolex tone gold and deep carbon grays) */
-  --color-brand-bg-primary: #050505;
-  --color-brand-bg-secondary: #0E0E0E;
-  --color-brand-gold: #E6C068;
-  --color-brand-gold-glow: #F2DEC0;
+  /* Premium Semiconductor Industry (Rolex champagne gold, Slate Navy, Professional Blue) */
+  --color-brand-bg-primary: #0F172A;
+  --color-brand-bg-secondary: #1E293B;
+  --color-brand-gold: #C8A96B;
+  --color-brand-gold-glow: #F1E4C3;
+  --color-brand-blue-accent: #3B82F6;
   --color-brand-red-deep: #250B0E;
-  --color-brand-red-highlight: #A8242E;
-  --color-brand-text: #FFFFFF;
-  --color-brand-muted: #D4D4D8;
+  --color-brand-red-highlight: #DC2626;
+  --color-brand-text: #F8FAFC;
+  --color-brand-muted: #CBD5E1;
 
   /* Custom semiconductor glow animation values */
   --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
@@ -38,18 +39,18 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #050505;
+  background: #0F172A;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(230, 192, 104, 0.15);
+  background: rgba(200, 169, 107, 0.15);
   border-radius: 3px;
-  border: 1px solid rgba(168, 36, 46, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.2);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #E6C068;
-  box-shadow: 0 0 10px #E6C068;
+  background: #C8A96B;
+  box-shadow: 0 0 10px #C8A96B;
 }
 
 html {
@@ -61,21 +62,21 @@ html {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .hover-glow-gold:hover {
-  box-shadow: 0 0 20px rgba(230, 192, 104, 0.15);
-  border-color: #E6C068;
+  box-shadow: 0 0 20px rgba(200, 169, 107, 0.15);
+  border-color: #C8A96B;
 }
 
 .hover-glow-red {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .hover-glow-red:hover {
-  box-shadow: 0 0 20px rgba(168, 36, 46, 0.15);
-  border-color: #A8242E;
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.15);
+  border-color: #DC2626;
 }
 
 /* Semiconductor node connection line glow */
 .node-line-animated {
-  background: linear-gradient(90deg, transparent, #E6C068, transparent);
+  background: linear-gradient(90deg, transparent, #C8A96B, transparent);
   background-size: 200% 100%;
   animation: move-line 3s linear infinite;
 }
